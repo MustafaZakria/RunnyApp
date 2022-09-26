@@ -4,6 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Android/Testing ClothingApp/RunningApp/app/src/main/res/layout/activity_main.xml" value="0.14351851851851852" />
+        <entry key="..\:/Android/Testing ClothingApp/RunningApp/app/src/main/res/layout/fragment_settings.xml" value="0.25" />
+        <entry key="..\:/Android/Testing ClothingApp/RunningApp/app/src/main/res/layout/fragment_setup.xml" value="0.2359375" />
+        <entry key="..\:/Android/Testing ClothingApp/RunningApp/app/src/main/res/layout/fragment_statistics.xml" value="0.1" />
+        <entry key="..\:/Android/Testing ClothingApp/RunningApp/app/src/main/res/layout/fragment_tracking.xml" value="0.25" />
       </map>
     </option>
   </component>
