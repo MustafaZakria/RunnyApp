@@ -175,7 +175,6 @@ class TrackingService: LifecycleService() {
                 .addAction(R.drawable.ic_pause, notificationActionText, pendingIntent)
             notificationManager.notify(NOTIFICATION_ID, curNotificationBuilder.build())
         }
-
     }
 
     @SuppressLint("MissingPermission")
@@ -204,6 +203,7 @@ class TrackingService: LifecycleService() {
             if(isTracking.value!!) {
                 result.locations.let { locations ->
                     for(location in locations) {
+                        Timber.d("location: ${location.latitude}, ${location.longitude}")
                         addPathPoint(location)
                     }
                 }

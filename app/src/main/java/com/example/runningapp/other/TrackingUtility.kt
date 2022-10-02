@@ -4,6 +4,8 @@ import android.content.Context
 import android.os.Build
 import pub.devrel.easypermissions.EasyPermissions
 import android.Manifest
+import android.location.Location
+import com.example.runningapp.services.PolyLine
 import java.sql.Time
 import java.util.concurrent.TimeUnit
 
@@ -25,6 +27,25 @@ object TrackingUtility {
             )
 
         }
+
+    fun calculatePolylineLength(polyline: PolyLine): Float {
+        var distance = 0f
+        for(i in 0..polyline.size -2) {
+            val pos1 = polyline[i]
+            val pos2 = polyline[2]
+
+            val result = FloatArray(1)
+            Location.distanceBetween(
+                pos1.latitude,
+                pos1.longitude,
+                pos2.latitude,
+                pos2.longitude,
+                result
+            )
+            distance += result[0]
+        }
+        return distance
+    }
 
     fun getFormattedStopWatchTime(ms: Long, includeMillis: Boolean = false): String {
         var milliSeconds = ms
