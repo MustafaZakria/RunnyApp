@@ -6,6 +6,8 @@
     android:layout_height="wrap_content"
     android:padding="8dp">
 
+
+
     <ImageView
         android:id="@+id/ivRunImage"
         android:layout_width="match_parent"
@@ -13,7 +15,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/ic_launcher_background"
+        android:scaleType="fitXY"/>
+
+    <ImageView
+        android:id="@+id/ivDeleteRun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_close_black"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="03dp"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvDate"

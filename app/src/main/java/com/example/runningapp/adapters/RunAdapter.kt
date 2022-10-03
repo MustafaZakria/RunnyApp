@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +18,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class RunAdapter :RecyclerView.Adapter<RunAdapter.RunViewHolder>(){
+
+    val id = MutableLiveData<Int?>()
 
     val diffCallback = object : DiffUtil.ItemCallback<Run>() {
         override fun areItemsTheSame(oldItem: Run, newItem: Run): Boolean {
@@ -67,5 +71,14 @@ class RunAdapter :RecyclerView.Adapter<RunAdapter.RunViewHolder>(){
 
     override fun getItemCount(): Int = differ.currentList.size
 
-    inner class RunViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
+    inner class RunViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        init {
+            itemView.ivDeleteRun.setOnClickListener {
+                val pos: Int = adapterPosition
+                val runId = differ.currentList[pos].id
+                id.postValue(runId)
+                itemView.visibility = View.GONE
+            }
+        }
+    }
 }

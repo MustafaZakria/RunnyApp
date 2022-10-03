@@ -12,6 +12,9 @@ interface RunDao {
     @Delete
     suspend fun deleteRun(run: Run)
 
+    @Query("select * From running_table where id == :id")
+    suspend fun getRunById(id: Int): Run
+
     //not suspend bec live data is execute asynchronously
     @Query("Select * From running_table Order By timestamp DESC")
     fun getAllRunsSortedByDate(): LiveData<List<Run>>
