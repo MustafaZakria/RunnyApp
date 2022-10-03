@@ -7,7 +7,7 @@ Running Tracker Application
 
 ## Description
 
-A running tracker app that enables user to:
+### A running tracker app that enables user to:
 * Make a run and track it.
 * Show all runs that user did.
 * Sort runs by date, calories burned, average speed, duration, and distance.
