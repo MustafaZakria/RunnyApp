@@ -170,6 +170,7 @@ class TrackingService: LifecycleService() {
             isAccessible = true
             set(curNotificationBuilder, ArrayList<NotificationCompat.Action>())
         }
+
         if(!serviceKilled) {
             curNotificationBuilder = baseNotificationBuilder
                 .addAction(R.drawable.ic_pause, notificationActionText, pendingIntent)

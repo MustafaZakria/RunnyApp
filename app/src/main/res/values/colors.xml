@@ -23,4 +23,16 @@
     <color name="colorAccent">#FFE600</color>
     <color name="errorColor">#D50000</color>
     <color name="red">#FF0000</color>
+
+    <color name="off_white">#DCDEE5</color>
+    <color name="green">#B0EB5F</color>
+
+    <color name="light_gray">#7E887C7C</color>
+    <color name="hint_color">#B3AAAA</color>
+
+    <color name="gray_A">#151718</color>
+    <color name="gray_B">#1E2021</color>
+    <color name="gray_C">#282A2C</color>
+
+    <color name="blue">#52C6FF</color>
 </resources>

@@ -27,15 +27,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/running_app"
-                android:textSize="30sp"
-                android:textStyle="bold"
+                android:textSize="28sp"
                 android:gravity="center_vertical"
                 android:textColor="@android:color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:fontFamily="@font/oleo"/>
 
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>

@@ -69,4 +69,16 @@
         <item name="android:textColor">@color/colorAccent</item>
     </style>
 
+    <style name="bigButtonStyle" parent="@android:style/Widget.Button.Small">
+        <item name="android:textColor">#000</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="fontFamily">@font/outfit_bold</item>
+    </style>
+    <style name="smallButtonStyle" parent="@android:style/Widget.Button.Small">
+        <item name="android:textColor">#000</item>
+        <item name="android:textSize">15sp</item>
+        <item name="fontFamily">@font/outfit_medium</item>
+    </style>
+
 </resources>

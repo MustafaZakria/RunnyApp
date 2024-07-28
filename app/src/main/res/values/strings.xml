@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RunningApp</string>
+    <string name="app_name">Runny</string>
     <string name="google_maps_key">AIzaSyA2L-Ao8gx1Sk8mi9AUybhBAX_MLw94JaM</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -7,11 +7,13 @@
     <string name="statistics">Statistics</string>
     <string name="settings">Settings</string>
     <string name="running_app">Running App</string>
-    <string name="welcome_msg">Welcome!\nPlease enter your name and weight.</string>
+    <string name="get_started">Get Started</string>
+    <string name="welcome_msg">Welcome,\nPlease enter your name and weight to start your journey!</string>
     <string name="kg">kg</string>
     <string name="continue_msg">Continue</string>
     <string name="weight_hint">Your Weight</string>
     <string name="name_hint">Your Name</string>
+    <string name="blood_hint">Your Blood Type</string>
     <string name="sort_by">sort by</string>
     <string-array name="filter_options">
         <item>Date</item>
@@ -33,4 +35,7 @@
     <string name="total_time">Total Time</string>
     <string name="total_calories_burned">Total Calories Burned</string>
     <string name="avg_speed">Average Speed</string>
+
+
+    <string name="upload_photo">Upload photo</string>
 </resources>

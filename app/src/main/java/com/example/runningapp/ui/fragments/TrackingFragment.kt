@@ -2,7 +2,6 @@ package com.example.runningapp.ui.fragments
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.location.Location
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -25,15 +24,16 @@ import com.example.runningapp.ui.viewmodels.MainViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_tracking.*
-import java.lang.Math.round
 import java.util.*
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class TrackingFragment : Fragment(R.layout.fragment_tracking) {
@@ -64,6 +64,9 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mapView.onCreate(savedInstanceState)
+
+//        val mapStyleOptions = MapStyleOptions.loadRawResourceStyle(requireContext(), R.raw.style_map)
+//        map?.setMapStyle(mapStyleOptions)
 
         btnToggleRun.setOnClickListener {
             toggleRun()
