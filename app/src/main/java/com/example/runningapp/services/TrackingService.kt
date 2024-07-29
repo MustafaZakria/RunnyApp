@@ -135,6 +135,7 @@ class TrackingService: LifecycleService() {
             while (isTracking.value!!) {
                 lapTime = System.currentTimeMillis() - timeStarted
                 timeRunInMillis.postValue(timeRun+lapTime)
+                // update time in seconds
                 if(timeRunInMillis.value!! >= lastSecondTimestamp + 1000L) {
                     timeRunInSeconds.postValue(timeRunInSeconds.value!! +1)
                     lastSecondTimestamp += 1000L

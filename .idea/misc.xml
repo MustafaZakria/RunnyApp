@@ -3,10 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android/RunningApp/app/src/main/res/drawable/button.xml" value="0.1945" />
+        <entry key="..\:/Android/RunningApp/app/src/main/res/drawable/top_gradient_shape.xml" value="0.224" />
         <entry key="..\:/Android/RunningApp/app/src/main/res/layout-land/fragment_statistics.xml" value="0.21164021164021163" />
         <entry key="..\:/Android/RunningApp/app/src/main/res/layout/activity_main.xml" value="0.24635416666666668" />
         <entry key="..\:/Android/RunningApp/app/src/main/res/layout/fragment_run.xml" value="0.24635416666666668" />
-        <entry key="..\:/Android/RunningApp/app/src/main/res/layout/fragment_settings.xml" value="0.2246376811594203" />
+        <entry key="..\:/Android/RunningApp/app/src/main/res/layout/fragment_settings.xml" value="0.264" />
         <entry key="..\:/Android/RunningApp/app/src/main/res/layout/fragment_setup.xml" value="0.264" />
         <entry key="..\:/Android/RunningApp/app/src/main/res/layout/fragment_statistics.xml" value="0.24635416666666668" />
         <entry key="..\:/Android/RunningApp/app/src/main/res/layout/fragment_tracking.xml" value="0.24635416666666668" />
