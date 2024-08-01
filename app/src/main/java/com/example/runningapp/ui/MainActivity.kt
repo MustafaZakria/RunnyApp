@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 
         navigateToTrackingFragmentIfNeeded(intent)
 
-        setSupportActionBar(toolbar)
+//        setSupportActionBar(toolbar)
 
         bottomNavigationView.setupWithNavController(navHostFragment.findNavController())
         bottomNavigationView.setOnItemReselectedListener { /*No-OP*/ }
@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity() {
                     else -> bottomNavigationView.visibility = View.GONE
                 }
             }
-
     }
 
     override fun onNewIntent(intent: Intent?) {

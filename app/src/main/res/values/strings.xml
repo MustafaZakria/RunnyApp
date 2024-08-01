@@ -28,14 +28,24 @@
     <string name="kcal">0kcal</string>
     <string name="km_h">0km/h</string>
     <string name="start">Start</string>
-    <string name="finish">Finish Run</string>
+    <string name="finish">Finish</string>
     <string name="letsgo">Let\'s go, USERNAME!</string>
     <string name="apply_changes">Apply Changes</string>
     <string name="total_distance">Total Distance</string>
     <string name="total_time">Total Time</string>
     <string name="total_calories_burned">Total Calories Burned</string>
     <string name="avg_speed">Average Speed</string>
-
-
     <string name="upload_photo">Upload photo</string>
+
+    <string name="duration">Duration</string>
+    <string name="distance">Distance</string>
+    <string name="km_tv">KM</string>
+    <string name="zero_float">0.0</string>
+    <string name="calories">Calories</string>
+    <string name="kcal_tv">Kcal</string>
+    <string name="zero">0</string>
+    <string name="avg_pace">Avg. Pace</string>
+    <string name="kmh">KM/H</string>
+    <string name="exit">Exit</string>
+
 </resources>
