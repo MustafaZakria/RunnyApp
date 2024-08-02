@@ -3,50 +3,235 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_margin="16dp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ivProfile"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/profile_pic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/circleImageView" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvHello"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="@string/hello"
+        android:textColor="@color/light_gray"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvStartRun"
+        app:layout_constraintStart_toEndOf="@+id/ivProfile"
+        app:layout_constraintTop_toTopOf="@+id/ivProfile" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvStartRun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="@string/start_run_now"
+        android:textColor="@color/off_white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivProfile"
+        app:layout_constraintStart_toEndOf="@+id/ivProfile"
+        app:layout_constraintTop_toBottomOf="@+id/tvHello" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnStartRun"
+        style="@style/smallButtonStyle"
+        android:layout_width="140dp"
+        android:layout_height="35dp"
+        android:background="@drawable/button_gradient"
+        android:text="@string/start_run"
+        app:layout_constraintBottom_toBottomOf="@+id/ivProfile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ivProfile" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvRecent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:cardBackgroundColor="@color/gray_B"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvStartRun"
+        app:cardCornerRadius="12dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="16dp">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvRecentRun"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/recent_run"
+                android:textColor="@color/off_white"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvRecentKm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_medium"
+                android:textColor="@color/off_white"
+                android:textSize="26sp"
+                app:layout_constraintBottom_toBottomOf="@+id/ivRiseUp"
+                app:layout_constraintEnd_toStartOf="@+id/ivRiseUp"
+                app:layout_constraintTop_toTopOf="@+id/ivRiseUp"
+                tools:text="16.5KM"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivRiseUp"
+                android:layout_width="120dp"
+                android:layout_height="80dp"
+                android:src="@drawable/riseup_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvTimer"
+                app:layout_constraintBottom_toBottomOf="@id/tvTimer"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivCalendar"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@drawable/ic_calendar"
+                app:layout_constraintStart_toStartOf="@id/tvRecentRun"
+                app:layout_constraintTop_toBottomOf="@id/tvRecentRun"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvCalendar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:fontFamily="@font/roboto"
+                android:textColor="@color/light_gray"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/ivCalendar"
+                app:layout_constraintStart_toEndOf="@+id/ivCalendar"
+                app:layout_constraintTop_toTopOf="@+id/ivCalendar"
+                tools:text="15, oct 2024" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivTimer"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@drawable/ic_timer"
+                app:layout_constraintStart_toStartOf="@id/ivCalendar"
+                app:layout_constraintTop_toBottomOf="@id/ivCalendar"
+                android:layout_marginTop="6dp"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvTimer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:textColor="@color/light_gray"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@+id/ivTimer"
+                app:layout_constraintTop_toTopOf="@+id/ivTimer"
+                app:layout_constraintBottom_toBottomOf="@+id/ivTimer"
+                tools:text="00:05:22"
+                android:layout_marginStart="4dp"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivCal"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@drawable/burn_icon_gray"
+                app:layout_constraintStart_toStartOf="@id/ivTimer"
+                app:layout_constraintTop_toBottomOf="@id/ivTimer"
+                android:layout_marginTop="6dp"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvCalories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:textColor="@color/light_gray"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@+id/ivCal"
+                app:layout_constraintTop_toTopOf="@+id/ivCal"
+                app:layout_constraintBottom_toBottomOf="@+id/ivCal"
+                tools:text="231Kcal"
+                android:layout_marginStart="4dp"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvRuns"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/roboto_black"
+        android:text="@string/runs"
+        android:textColor="@color/off_white"
+        android:textSize="28sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cvRecent" />
 
     <Spinner
         android:id="@+id/spFilter"
         android:layout_width="50pt"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/off_white"
         android:entries="@array/filter_options"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
+        android:textColor="@color/off_white"
+        app:layout_constraintBottom_toBottomOf="@+id/tvRuns"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/tvRuns" />
 
     <TextView
         android:id="@+id/tvFilterBy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sort_by"
-        android:textSize="16sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/spFilter"
         app:layout_constraintEnd_toStartOf="@+id/spFilter"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/spFilter"
+        android:textColor="@color/light_gray"
+        android:fontFamily="@font/roboto"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvRuns"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spFilter" />
+    <!--        <androidx.recyclerview.widget.RecyclerView-->
+    <!--            android:id="@+id/rvRuns"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="0dp"-->
+    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintTop_toBottomOf="@+id/spFilter"-->
+    <!--            android:layout_marginTop="16dp"/>-->
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_add"
-        app:backgroundTint="@color/colorAccent"
-        app:fabSize="normal"
-        app:rippleColor="@android:color/white"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:tint="@android:color/black" />
+    <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+    <!--        android:id="@+id/fab"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginEnd="16dp"-->
+    <!--        android:layout_marginBottom="16dp"-->
+    <!--        android:src="@drawable/ic_add"-->
+    <!--        app:backgroundTint="@color/green"-->
+    <!--        app:fabSize="normal"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:rippleColor="@android:color/white"-->
+    <!--        app:tint="@android:color/black" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

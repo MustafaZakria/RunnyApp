@@ -48,4 +48,9 @@
     <string name="kmh">KM/H</string>
     <string name="exit">Exit</string>
 
+    <string name="hello">Hello, UserName</string>
+    <string name="start_run_now">Start Run Now!</string>
+    <string name="runs">Runs</string>
+    <string name="recent_run">Recent Run</string>
+    <string name="start_run">Start Run</string>
 </resources>
