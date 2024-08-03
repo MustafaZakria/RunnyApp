@@ -48,26 +48,6 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideName(sharedPreferences: SharedPreferences) =
-        sharedPreferences.getString(KEY_NAME, "") ?: ""
-
-    @Singleton
-    @Provides
-    fun provideWeight(sharedPreferences: SharedPreferences) =
-        sharedPreferences.getFloat(KEY_WEIGHT, 80f)
-
-    @Singleton
-    @Provides
-    fun provideFirstTimeToggle(sharedPreferences: SharedPreferences) =
-        sharedPreferences.getBoolean(KEY_FIRST_TIME_TOGGLE, true)
-
-    @Singleton
-    @Provides
-    fun provideBloodType(sharedPreferences: SharedPreferences) =
-        sharedPreferences.getString(KEY_BLOOD_TYPE, "") ?: ""
-
-    @Singleton
-    @Provides
     fun provideGlideInstance(
         @ApplicationContext context: Context
     ) = Glide.with(context).setDefaultRequestOptions(

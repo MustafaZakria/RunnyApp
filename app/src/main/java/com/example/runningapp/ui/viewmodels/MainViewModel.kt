@@ -17,6 +17,8 @@ class MainViewModel @Inject constructor(
     val mainRepository: MainRepository
 ) : ViewModel() {
 
+    val recentRuns = mainRepository.getAllRunsSortedByDate()
+
     private val runsSortedByDate = mainRepository.getAllRunsSortedByDate()
     private val runsSortedByDistance = mainRepository.getAllRunsSortedByDistance()
     private val runsSortedByCaloriesBurned = mainRepository.getAllRunsSortedByCalories()

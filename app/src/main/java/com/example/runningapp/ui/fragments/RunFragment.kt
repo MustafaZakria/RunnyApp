@@ -1,5 +1,7 @@
 package com.example.runningapp.ui.fragments
 
+import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -13,18 +15,28 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.runningapp.R
 import com.example.runningapp.adapters.RunAdapter
 import com.example.runningapp.db.Run
+import com.example.runningapp.other.Constants
+import com.example.runningapp.other.Constants.KEY_NAME
 import com.example.runningapp.other.Constants.REQUEST_CODE_LOCATION_PERMISSION
 import com.example.runningapp.other.SortType
 import com.example.runningapp.other.TrackingUtility
 import com.example.runningapp.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_run.*
+import kotlinx.android.synthetic.main.fragment_run.ivProfile
+import kotlinx.android.synthetic.main.fragment_run.tvCalories
+import kotlinx.android.synthetic.main.fragment_settings.*
+import kotlinx.android.synthetic.main.item_run.*
+import kotlinx.android.synthetic.main.item_run.view.*
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import timber.log.Timber
+import java.text.SimpleDateFormat
+import java.util.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class RunFragment : Fragment(R.layout.fragment_run), EasyPermissions.PermissionCallbacks {
@@ -33,10 +45,15 @@ class RunFragment : Fragment(R.layout.fragment_run), EasyPermissions.PermissionC
 
     private lateinit var runAdapter: RunAdapter
 
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requestPermissions()
         setUpRecyclerView()
+        setUserInfo()
+        setRecentRun()
 
         when (viewModel.sortType) {
             SortType.DATE -> spFilter.setSelection(0)
@@ -69,10 +86,42 @@ class RunFragment : Fragment(R.layout.fragment_run), EasyPermissions.PermissionC
             runAdapter.submitList(it)
         })
 
-        fab.setOnClickListener {
+        btnStartRun.setOnClickListener {
             findNavController().navigate(R.id.action_runFragment_to_trackingFragment)
         }
 
+    }
+
+    private fun setRecentRun() {
+        viewModel.recentRuns.observe(viewLifecycleOwner) { runs ->
+            val run = runs.first()
+
+            val calender = Calendar.getInstance().apply {
+                timeInMillis = run.timestamp
+            }
+            val dateFormat = SimpleDateFormat("dd.MM.yy", Locale.getDefault())
+            tvCalendar.text = dateFormat.format(calender.time)
+
+            val distanceInKm = "${run.distanceInMeters / 1000f}km"
+            tvRecentKm.text = distanceInKm
+
+            val caloriesBurned = "${run.caloriesBurned}kcal"
+            tvCalories.text = caloriesBurned
+
+            tvTimer.text = TrackingUtility.getFormattedStopWatchTime(run.timeInMillis)
+        }
+    }
+
+    private fun setUserInfo() {
+        val userName = sharedPreferences.getString(KEY_NAME, "")
+        val pictureUri = sharedPreferences.getString(Constants.KEY_PICTURE_URI, "")
+
+        val text = "Hello, $userName"
+        tvHello.text = text
+        if (pictureUri?.isNotEmpty() == true) {
+            val uri = Uri.parse(pictureUri)
+            ivProfile.setImageURI(uri)
+        }
     }
 
     private fun deleteRun(id: Int) {
