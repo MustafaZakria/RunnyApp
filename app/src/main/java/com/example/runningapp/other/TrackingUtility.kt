@@ -2,10 +2,15 @@ package com.example.runningapp.other
 
 import android.Manifest
 import android.content.Context
+import android.icu.util.Calendar
 import android.location.Location
 import android.os.Build
+import androidx.annotation.RequiresApi
+import com.example.runningapp.db.Run
 import com.example.runningapp.services.PolyLine
 import pub.devrel.easypermissions.EasyPermissions
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 object TrackingUtility {
@@ -64,6 +69,17 @@ object TrackingUtility {
         }
 
         return result
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    fun getRunBYDate(runs: List<Run>, date: String): List<Run> {
+        return runs.filter {
+            val calendar = Calendar.getInstance().apply {
+                this.timeInMillis = it.timestamp
+            }
+            val dateFormat = SimpleDateFormat("dd.MM.yy", Locale.getDefault())
+            dateFormat.format(calendar.time) == date
+        }
     }
 }
 

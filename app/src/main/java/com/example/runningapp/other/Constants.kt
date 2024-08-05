@@ -22,8 +22,9 @@ object Constants {
     const val KEY_WEIGHT = "KEY_WEIGHT"
     const val KEY_BLOOD_TYPE = "KEY_BLOOD_TYPE"
     const val KEY_PICTURE_URI = "KEY_PICTURE_URI"
+    const val KEY_STREAK_DAYS = "KEY_STREAK_DAYS"
 
-    const val POLYLINE_COLOR = Color.RED
+    const val POLYLINE_COLOR = R.color.green
     const val POLYLINE_WIDTH = 8f
     const val MAP_ZOOM = 15f
 

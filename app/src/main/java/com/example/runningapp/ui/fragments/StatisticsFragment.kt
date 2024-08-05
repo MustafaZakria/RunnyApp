@@ -1,15 +1,21 @@
 package com.example.runningapp.ui.fragments
 
+import android.content.SharedPreferences
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.runningapp.R
+import com.example.runningapp.other.Constants.KEY_STREAK_DAYS
 import com.example.runningapp.other.CustomMarkerView
+import com.example.runningapp.other.TrackingUtility
 import com.example.runningapp.other.TrackingUtility.getFormattedStopWatchTime
+import com.example.runningapp.other.TrackingUtility.getRunBYDate
 import com.example.runningapp.ui.viewmodels.StatisticsViewModel
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
@@ -17,6 +23,9 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_statistics.*
+import java.text.SimpleDateFormat
+import java.util.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
@@ -24,10 +33,37 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
 
     private val viewModel: StatisticsViewModel by viewModels()
 
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
+
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         subscribeToObservers()
         setupBarChart()
+        setStreakRunningDays()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun setStreakRunningDays() {
+        val dateFormat = SimpleDateFormat("dd.MM.yy", Locale.getDefault())
+        val todayCal = Calendar.getInstance()
+        val yesterdayCal = Calendar.getInstance()
+        yesterdayCal.add(Calendar.DATE, -1)
+
+        val today = dateFormat.format(todayCal.time)
+        val yesterday = dateFormat.format(yesterdayCal.time)
+
+        var days = 0
+        viewModel.runsSortedByDate.value?.let {
+            if(getRunBYDate(it, yesterday).isNotEmpty() || getRunBYDate(it, today).isNotEmpty()) {
+                days = sharedPreferences.getInt(KEY_STREAK_DAYS, 0)
+            }
+        }
+
+
+        val text = "$days /"
+        tvDay.text = text
     }
 
     private fun setupBarChart() {
@@ -44,7 +80,7 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
             setDrawGridLines(false)
         }
         barChart.apply {
-            description.text = "Avg Speed Over Time"
+//            description.text = "Avg Speed Over Time"
             legend.isEnabled = false
         }
     }
@@ -80,13 +116,18 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
             it?.let {
                 val allAvgSpeeds =
                     it.indices.map { i -> BarEntry(i.toFloat(), it[i].avgSpeedInKMH) }
-                val bardataSet = BarDataSet(allAvgSpeeds, "Avg Speed Over Time").apply {
-                    valueTextColor = Color.WHITE
-                    color = ContextCompat.getColor(requireContext(), R.color.colorAccent)
+                val allDistance =
+                    it.indices.map { i -> BarEntry(i.toFloat(), it[i].distanceInMeters / 1000f) }
+                val barDataSetSpeed = BarDataSet(allAvgSpeeds, "").apply {
+                    valueTextColor = R.color.off_white
+                    color = ContextCompat.getColor(requireContext(), R.color.green)
                 }
-                barChart.data = BarData(bardataSet)
-                barChart.marker =
-                    CustomMarkerView(it.reversed(), requireContext(), R.layout.marker_view)
+                val barDataSetDistance = BarDataSet(allDistance, "").apply {
+                    valueTextColor = R.color.off_white
+                    color = Color.GREEN
+                }
+                barChart.data = BarData(barDataSetDistance, barDataSetSpeed)
+//                barChart.marker = CustomMarkerView(it.reversed(), requireContext(), R.layout.marker_view)
                 barChart.invalidate()
             }
         })

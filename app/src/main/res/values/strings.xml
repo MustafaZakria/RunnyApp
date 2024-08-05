@@ -53,4 +53,11 @@
     <string name="runs">Runs</string>
     <string name="recent_run">Recent Run</string>
     <string name="start_run">Start Run</string>
+    <string name="analysis">Analysis</string>
+    <string name="challenge">40-Days Challenge</string>
+    <string name="complete_challenge">Complete 40-Running Days Streak</string>
+    <string name="forty">40</string>
+    <string name="one_slash">1 /</string>
+    <string name="distance_covered">Distance Covered</string>
+    <string name="calories_burned">Calories Burned</string>
 </resources>

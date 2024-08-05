@@ -29,9 +29,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     @Inject
     lateinit var sharedPref: SharedPreferences
 
-    @Inject
-    lateinit var glide: Glide
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loadFromSharedPref()
