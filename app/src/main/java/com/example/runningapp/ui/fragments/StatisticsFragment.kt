@@ -12,8 +12,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.runningapp.R
 import com.example.runningapp.other.Constants.KEY_STREAK_DAYS
-import com.example.runningapp.other.CustomMarkerView
-import com.example.runningapp.other.TrackingUtility
 import com.example.runningapp.other.TrackingUtility.getFormattedStopWatchTime
 import com.example.runningapp.other.TrackingUtility.getRunBYDate
 import com.example.runningapp.ui.viewmodels.StatisticsViewModel
@@ -54,16 +52,15 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
         val today = dateFormat.format(todayCal.time)
         val yesterday = dateFormat.format(yesterdayCal.time)
 
-        var days = 0
+        var days = sharedPreferences.getInt(KEY_STREAK_DAYS, 0)
         viewModel.runsSortedByDate.value?.let {
-            if(getRunBYDate(it, yesterday).isNotEmpty() || getRunBYDate(it, today).isNotEmpty()) {
-                days = sharedPreferences.getInt(KEY_STREAK_DAYS, 0)
+            if (getRunBYDate(it, yesterday).isEmpty() && getRunBYDate(it, today).isEmpty()) {
+                days = 0
             }
+            val text = "$days /"
+            tvDay.text = text
         }
 
-
-        val text = "$days /"
-        tvDay.text = text
     }
 
     private fun setupBarChart() {
@@ -86,6 +83,11 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
     }
 
     private fun subscribeToObservers() {
+        viewModel.runsSortedByDate.observe(viewLifecycleOwner, Observer {
+            val days = sharedPreferences.getInt(KEY_STREAK_DAYS, 0)
+            val text = "$days /"
+            tvDay.text = text
+        })
         viewModel.totalTimeRun.observe(viewLifecycleOwner, Observer {
             it?.let {
                 val totalTimeRun = getFormattedStopWatchTime(it)
