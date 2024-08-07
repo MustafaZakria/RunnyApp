@@ -15,10 +15,13 @@ import com.example.runningapp.other.Constants.KEY_STREAK_DAYS
 import com.example.runningapp.other.TrackingUtility.getFormattedStopWatchTime
 import com.example.runningapp.other.TrackingUtility.getRunBYDate
 import com.example.runningapp.ui.viewmodels.StatisticsViewModel
+import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_statistics.*
 import java.text.SimpleDateFormat
@@ -64,21 +67,41 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
     }
 
     private fun setupBarChart() {
+        barChart.description.isEnabled = false
+        barChart.setTouchEnabled(false)
         barChart.xAxis.apply {
             position = XAxis.XAxisPosition.BOTTOM
-            setDrawLabels(false)
             axisLineColor = Color.WHITE
             textColor = Color.WHITE
             setDrawGridLines(false)
+            setDrawAxisLine(false)
+            valueFormatter = AxisFormatter()
         }
         barChart.axisLeft.apply {
             axisLineColor = Color.WHITE
             textColor = Color.WHITE
-            setDrawGridLines(false)
+            setDrawGridLines(true)
+            setDrawAxisLine(false)
+            enableGridDashedLine(10f, 10f, 0f)
+            axisMinimum = 0f
+            mAxisRange = 15f
         }
+        barChart.axisRight.isEnabled = false
         barChart.apply {
 //            description.text = "Avg Speed Over Time"
             legend.isEnabled = false
+        }
+    }
+
+    inner class AxisFormatter : IndexAxisValueFormatter() {
+        var labels = mutableListOf<String>()
+        override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+            val indexOfBar = value.toInt()
+            return if (indexOfBar - 1 < labels.size) {
+                labels[indexOfBar]
+            } else {
+                ""
+            }
         }
     }
 
@@ -117,18 +140,24 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
         viewModel.runsSortedByDate.observe(viewLifecycleOwner, Observer {
             it?.let {
                 val allAvgSpeeds =
-                    it.indices.map { i -> BarEntry(i.toFloat(), it[i].avgSpeedInKMH) }
+                    it.indices.map { i -> BarEntry(i.toFloat(), it[i].avgSpeedInKMH) }.subList(0, 6)
                 val allDistance =
-                    it.indices.map { i -> BarEntry(i.toFloat(), it[i].distanceInMeters / 1000f) }
-                val barDataSetSpeed = BarDataSet(allAvgSpeeds, "").apply {
+                    it.indices.map { i -> BarEntry(i.toFloat(), it[i].distanceInMeters / 1000f) }.subList(0, 6)
+                val barDataSetSpeed = BarDataSet(allAvgSpeeds, "avg speed").apply {
                     valueTextColor = R.color.off_white
                     color = ContextCompat.getColor(requireContext(), R.color.green)
                 }
-                val barDataSetDistance = BarDataSet(allDistance, "").apply {
+                val barDataSetDistance = BarDataSet(allDistance, "distance").apply {
                     valueTextColor = R.color.off_white
-                    color = Color.GREEN
+                    color =ContextCompat.getColor(requireContext(), R.color.dark_green)
                 }
-                barChart.data = BarData(barDataSetDistance, barDataSetSpeed)
+                val bars = arrayListOf(barDataSetSpeed, barDataSetDistance)
+                val bar1 = BarData(bars as List<IBarDataSet>?)
+                bar1.barWidth = 0.2f
+                bar1.setValueTextSize(0f)
+//        bar1.setValueTextColor(ContextCompat.getColor(applicationContext, R.color.green))
+                barChart.data = bar1
+                barChart.groupBars(-0.51f, 0.5f, 0.05f)
 //                barChart.marker = CustomMarkerView(it.reversed(), requireContext(), R.layout.marker_view)
                 barChart.invalidate()
             }

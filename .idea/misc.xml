@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Android/RunningApp/app/src/main/res/drawable/button.xml" value="0.1945" />
+        <entry key="..\:/Android/RunningApp/app/src/main/res/drawable/circle_color.xml" value="0.1" />
         <entry key="..\:/Android/RunningApp/app/src/main/res/drawable/circle_shape.xml" value="0.1565" />
         <entry key="..\:/Android/RunningApp/app/src/main/res/drawable/ic_speed.xml" value="0.1345" />
         <entry key="..\:/Android/RunningApp/app/src/main/res/drawable/top_gradient_shape.xml" value="0.224" />
@@ -12,7 +13,7 @@
         <entry key="..\:/Android/RunningApp/app/src/main/res/layout/fragment_run.xml" value="0.24635416666666668" />
         <entry key="..\:/Android/RunningApp/app/src/main/res/layout/fragment_settings.xml" value="0.264" />
         <entry key="..\:/Android/RunningApp/app/src/main/res/layout/fragment_setup.xml" value="0.264" />
-        <entry key="..\:/Android/RunningApp/app/src/main/res/layout/fragment_statistics.xml" value="0.24635416666666668" />
+        <entry key="..\:/Android/RunningApp/app/src/main/res/layout/fragment_statistics.xml" value="0.1" />
         <entry key="..\:/Android/RunningApp/app/src/main/res/layout/fragment_tracking.xml" value="0.24635416666666668" />
         <entry key="..\:/Android/RunningApp/app/src/main/res/layout/item_run.xml" value="0.24635416666666668" />
         <entry key="..\:/Android/RunningApp/app/src/main/res/layout/marker_view.xml" value="0.25" />

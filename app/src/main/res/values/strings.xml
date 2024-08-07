@@ -60,4 +60,6 @@
     <string name="one_slash">1 /</string>
     <string name="distance_covered">Distance Covered</string>
     <string name="calories_burned">Calories Burned</string>
+    <string name="performance">Performance</string>
+
 </resources>

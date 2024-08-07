@@ -98,11 +98,10 @@
         android:id="@+id/horizontalScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/cvRecent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp"
-        android:scrollbars="none">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cvRecent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
@@ -348,13 +347,108 @@
     </HorizontalScrollView>
 
 
-        <com.github.mikephil.charting.charts.BarChart
-            android:id="@+id/barChart"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvBarChart"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:cardBackgroundColor="@color/gray_B"
+        app:cardCornerRadius="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
+        android:layout_marginTop="16dp">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
-            tools:ignore="MissingClass"
-            android:layout_marginTop="8dp"/>
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvPerformance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/performance"
+                android:textColor="@color/off_white"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_margin="16dp"/>
+
+            <View
+                android:id="@+id/colorDistance"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:background="@drawable/circle_shape"
+                app:layout_constraintBottom_toTopOf="@id/dividerCv"
+                app:layout_constraintStart_toStartOf="@+id/tvPerformance"
+                app:layout_constraintTop_toBottomOf="@+id/tvPerformance"
+                android:layout_marginTop="8dp"
+                />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvColorDistance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:text="@string/distance"
+                android:textColor="@color/light_gray"
+                app:layout_constraintTop_toTopOf="@id/colorDistance"
+                app:layout_constraintBottom_toBottomOf="@id/colorDistance"
+                android:textSize="11sp"
+                app:layout_constraintStart_toEndOf="@+id/colorDistance"
+                android:layout_marginStart="4dp"/>
+
+            <View
+                android:id="@+id/colorSpeed"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:background="@drawable/circle_shape"
+                app:layout_constraintStart_toEndOf="@+id/tvColorDistance"
+                android:layout_marginTop="3dp"
+                app:layout_constraintBottom_toBottomOf="@id/colorDistance"
+                app:layout_constraintTop_toTopOf="@+id/colorDistance"
+                android:layout_marginStart="8dp"
+                android:backgroundTint="@color/dark_green"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvColorSpeed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:text="@string/avg_speed"
+                android:textColor="@color/light_gray"
+                app:layout_constraintTop_toTopOf="@id/colorDistance"
+                app:layout_constraintBottom_toBottomOf="@id/colorDistance"
+                android:textSize="11sp"
+                app:layout_constraintStart_toEndOf="@+id/colorSpeed"
+                android:layout_marginStart="4dp"/>
+
+            <View
+                android:id="@+id/dividerCv"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toBottomOf="@id/colorDistance"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@color/gray_C"
+                android:layout_marginTop="12dp"
+                />
+
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/barChart"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dividerCv" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
