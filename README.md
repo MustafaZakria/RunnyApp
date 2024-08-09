@@ -21,3 +21,12 @@ Running Tracker Application
 * MVVM architecture
 * Navigation Component
 * Recyclerview
+
+## Screens
+<p float="left">
+  <img src="Screens/one.png" width="100" />
+  <img src="Screens/two.png" width="100" /> 
+  <img src="Screens/three.png" width="100" />
+  <img src="Screens/four.png" width="100" />
+  <img src="Screens/five.png" width="100" />
+</p> 
