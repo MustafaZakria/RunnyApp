@@ -3,21 +3,7 @@
     "elementType": "geometry",
     "stylers": [
       {
-        "color": "#212121"
-      },
-      {
-        "lightness": 10
-      }
-    ]
-  },
-  {
-    "elementType": "labels",
-    "stylers": [
-      {
-        "saturation": 5
-      },
-      {
-        "weight": 4
+        "color": "#3d3d3d"
       }
     ]
   },
@@ -42,6 +28,14 @@
     "stylers": [
       {
         "color": "#212121"
+      }
+    ]
+  },
+  {
+    "featureType": "administrative",
+    "stylers": [
+      {
+        "visibility": "off"
       }
     ]
   },
@@ -91,27 +85,27 @@
   },
   {
     "featureType": "landscape",
-    "stylers": [
-      {
-        "lightness": 20
-      }
-    ]
-  },
-  {
-    "featureType": "landscape",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "lightness": 15
-      }
-    ]
-  },
-  {
-    "featureType": "landscape",
     "elementType": "labels",
     "stylers": [
       {
-        "lightness": 25
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "poi",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "poi",
+    "elementType": "labels",
+    "stylers": [
+      {
+        "visibility": "off"
       }
     ]
   },
@@ -155,7 +149,10 @@
     "featureType": "road",
     "stylers": [
       {
-        "weight": 4
+        "color": "#2b2b2b"
+      },
+      {
+        "weight": 1.5
       }
     ]
   },
@@ -183,6 +180,15 @@
     "stylers": [
       {
         "color": "#373737"
+      }
+    ]
+  },
+  {
+    "featureType": "road.arterial",
+    "elementType": "labels",
+    "stylers": [
+      {
+        "visibility": "off"
       }
     ]
   },
@@ -215,6 +221,23 @@
   },
   {
     "featureType": "transit",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "transit",
+    "elementType": "labels",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "transit",
     "elementType": "labels.text.fill",
     "stylers": [
       {
@@ -224,6 +247,24 @@
   },
   {
     "featureType": "water",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "water",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#000000"
+      }
+    ]
+  },
+  {
+    "featureType": "water",
+    "elementType": "labels",
     "stylers": [
       {
         "visibility": "off"

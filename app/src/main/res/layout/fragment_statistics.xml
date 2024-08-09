@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    >
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvAnalysis"
@@ -14,83 +14,91 @@
         app:fontFamily="@font/roboto_black"
         android:textSize="22sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvRecent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
         app:cardBackgroundColor="@color/gray_B"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvAnalysis"
-        app:cardCornerRadius="12dp">
+        app:cardCornerRadius="12dp"
+        android:layout_margin="16dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="130dp">
+            android:layout_height="wrap_content">
 
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tvChallenge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="14dp"
                 android:fontFamily="@font/roboto_medium"
                 android:text="@string/challenge"
                 android:textColor="@color/off_white"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_margin="16dp"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivRiseUp"
-                android:layout_width="190dp"
+                android:layout_width="130dp"
                 android:layout_height="110dp"
+                android:paddingTop="10dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/pic_svg2"
+                android:src="@drawable/stat_pic"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tvCompleteChallenge"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tvCompleteChallenge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="4dp"
                 android:fontFamily="@font/roboto"
+                android:text="@string/complete_challenge"
                 android:textColor="@color/light_gray"
                 android:textSize="12sp"
-                android:text="@string/complete_challenge"
+                app:layout_constraintEnd_toStartOf="@+id/ivRiseUp"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvChallenge"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="4dp" />
+                app:layout_constraintTop_toBottomOf="@+id/tvChallenge" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tvDay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto"
-                android:text="@string/one_slash"
                 android:textColor="@color/green"
                 android:textSize="40sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/tvCompleteChallenge"
-                android:layout_marginBottom="8dp"/>
+                app:layout_constraintTop_toBottomOf="@+id/tvCompleteChallenge"
+                tools:text="@string/one_slash" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tvDaysOut"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="4dp"
                 android:fontFamily="@font/roboto"
                 android:text="@string/forty"
                 android:textColor="@color/light_gray"
                 android:textSize="24sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tvDay"
-                android:layout_marginBottom="12dp"
-                android:layout_marginStart="8dp"/>
+                app:layout_constraintBottom_toBottomOf="@+id/tvDay"
+                app:layout_constraintStart_toEndOf="@+id/tvDay" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
@@ -98,10 +106,11 @@
         android:id="@+id/horizontalScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cvRecent">
+        app:layout_constraintTop_toBottomOf="@+id/cvRecent"
+        android:scrollbars="none">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
@@ -116,23 +125,25 @@
                 app:cardCornerRadius="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="16dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="130dp"
-                    android:layout_height="100dp"
+                    android:layout_height="wrap_content"
                     android:padding="16dp">
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/tvDistanceCovered"
-                        android:layout_width="50dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto"
+                        android:fontFamily="@font/roboto_medium"
                         android:text="@string/distance_covered"
                         android:textColor="@color/off_white"
                         android:textSize="12sp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivDistance"
@@ -151,7 +162,9 @@
                         android:textColor="@color/off_white"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvDistanceCovered"
+                        android:layout_marginTop="8dp"/>
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/tvKm"
@@ -182,15 +195,15 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="130dp"
-                    android:layout_height="100dp"
+                    android:layout_height="wrap_content"
                     android:padding="16dp">
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/tvTotalTimeInfo"
-                        android:layout_width="50dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto"
-                        android:text="@string/total_time"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="@string/total_time_nl"
                         android:textColor="@color/off_white"
                         android:textSize="12sp"
                         app:layout_constraintStart_toStartOf="parent"
@@ -213,7 +226,9 @@
                         android:textColor="@color/off_white"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvTotalTimeInfo"
+                        android:layout_marginTop="8dp"/>
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -233,15 +248,15 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="130dp"
-                    android:layout_height="100dp"
+                    android:layout_height="wrap_content"
                     android:padding="16dp">
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/tvAvgSpeed"
-                        android:layout_width="50dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto"
-                        android:text="@string/avg_speed"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="@string/avg_speed_nl"
                         android:textColor="@color/off_white"
                         android:textSize="12sp"
                         app:layout_constraintStart_toStartOf="parent"
@@ -264,7 +279,9 @@
                         android:textColor="@color/off_white"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvAvgSpeed"
+                        android:layout_marginTop="8dp"/>
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/tvKmh"
@@ -290,30 +307,32 @@
                 app:cardBackgroundColor="@color/gray_B"
                 app:cardCornerRadius="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/cvAvgSpeed"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginEnd="16dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="130dp"
-                    android:layout_height="100dp"
+                    android:layout_height="wrap_content"
                     android:padding="16dp">
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/tvCaloriesBurned"
-                        android:layout_width="50dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto"
+                        android:fontFamily="@font/roboto_medium"
                         android:text="@string/calories_burned"
                         android:textColor="@color/off_white"
                         android:textSize="12sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <androidx.appcompat.widget.AppCompatImageView
+*                    <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivCalories"
                         android:layout_width="16dp"
                         android:layout_height="16dp"
-                        android:src="@drawable/burn_icon"
+                        android:src="@drawable/ic_burn"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -326,7 +345,9 @@
                         android:textColor="@color/off_white"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvCaloriesBurned"
+                        android:layout_marginTop="8dp"/>
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/tvKcal"
@@ -357,7 +378,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
-        android:layout_marginTop="16dp">
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="8dp">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -371,7 +395,7 @@
                 android:fontFamily="@font/roboto_medium"
                 android:text="@string/performance"
                 android:textColor="@color/off_white"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_margin="16dp"/>
@@ -384,7 +408,7 @@
                 app:layout_constraintBottom_toTopOf="@id/dividerCv"
                 app:layout_constraintStart_toStartOf="@+id/tvPerformance"
                 app:layout_constraintTop_toBottomOf="@+id/tvPerformance"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
                 />
 
             <com.google.android.material.textview.MaterialTextView
@@ -392,7 +416,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto"
-                android:text="@string/distance"
+                android:text="@string/avg_speed"
                 android:textColor="@color/light_gray"
                 app:layout_constraintTop_toTopOf="@id/colorDistance"
                 app:layout_constraintBottom_toBottomOf="@id/colorDistance"
@@ -406,7 +430,6 @@
                 android:layout_height="10dp"
                 android:background="@drawable/circle_shape"
                 app:layout_constraintStart_toEndOf="@+id/tvColorDistance"
-                android:layout_marginTop="3dp"
                 app:layout_constraintBottom_toBottomOf="@id/colorDistance"
                 app:layout_constraintTop_toTopOf="@+id/colorDistance"
                 android:layout_marginStart="8dp"
@@ -417,7 +440,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto"
-                android:text="@string/avg_speed"
+                android:text="@string/distance"
                 android:textColor="@color/light_gray"
                 app:layout_constraintTop_toTopOf="@id/colorDistance"
                 app:layout_constraintBottom_toBottomOf="@id/colorDistance"
@@ -433,8 +456,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:background="@color/gray_C"
-                android:layout_marginTop="12dp"
-                />
+                android:layout_marginTop="8dp" />
 
 
             <com.github.mikephil.charting.charts.BarChart

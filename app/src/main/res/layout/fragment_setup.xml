@@ -35,7 +35,7 @@
         android:id="@+id/tvRunny"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="@string/app_name"
         android:textColor="@color/off_white"
         android:textSize="32sp"
@@ -44,12 +44,27 @@
         app:layout_constraintStart_toEndOf="@id/ivIcon"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvWelcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/outfit_semibold"
+        android:gravity="center"
+        android:padding="36dp"
+        android:text="Let's run towards a better, healthier, &amp; happier you!"
+        android:textColor="@color/off_white"
+        android:textSize="32sp"
+        app:layout_constraintBottom_toTopOf="@+id/cvHome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+<!--    AE282A2C-->
     <androidx.cardview.widget.CardView
         android:id="@+id/cvHome"
         android:layout_width="match_parent"
-        android:layout_height="320dp"
-        android:layout_margin="20dp"
-        app:cardBackgroundColor="#AE282A2C"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardBackgroundColor="#00282A2C"
         app:cardCornerRadius="30dp"
         app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -58,27 +73,31 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:paddingTop="16dp"
+            android:paddingBottom="0dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
 
-            <TextView
-                android:id="@+id/tvWelcome"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/outfit_black"
-                android:gravity="center"
-                android:padding="12dp"
-                android:text="@string/welcome_msg"
-                android:textColor="@color/off_white"
-                android:textSize="24sp"
-                app:layout_constraintBottom_toTopOf="@+id/tilName"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+<!--            <com.google.android.material.textview.MaterialTextView-->
+<!--                android:id="@+id/tvWelcome"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:fontFamily="@font/outfit_black"-->
+<!--                android:gravity="center"-->
+<!--                android:text="@string/welcome_msg"-->
+<!--                android:textColor="@color/off_white"-->
+<!--                android:textSize="24sp"-->
+<!--                app:layout_constraintBottom_toTopOf="@+id/tilName"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                android:layout_marginBottom="16dp"/>-->
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilName"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxBackgroundColor="@color/light_gray"
                 android:layout_marginBottom="4dp"
@@ -107,7 +126,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilWeight"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="14dp"
                 app:boxBackgroundColor="@color/light_gray"
@@ -139,15 +158,14 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnGetStarted"
                 style="@style/bigButtonStyle"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button"
                 android:backgroundTint="@color/green"
                 android:text="@string/get_started"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginBottom="24dp"/>
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

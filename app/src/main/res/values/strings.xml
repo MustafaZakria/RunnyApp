@@ -8,7 +8,8 @@
     <string name="settings">Settings</string>
     <string name="running_app">Running App</string>
     <string name="get_started">Get Started</string>
-    <string name="welcome_msg">Welcome,\nPlease enter your name and weight to start your journey!</string>
+<!--    <string name="welcome_msg">Welcome,\nPlease enter your name and weight to start your journey!</string>-->
+    <string name="welcome_msg">Welcome, To Runny!</string>
     <string name="kg">kg</string>
     <string name="continue_msg">Continue</string>
     <string name="weight_hint">Your Weight</string>
@@ -58,8 +59,9 @@
     <string name="complete_challenge">Complete 40-Running Days Streak</string>
     <string name="forty">40</string>
     <string name="one_slash">1 /</string>
-    <string name="distance_covered">Distance Covered</string>
-    <string name="calories_burned">Calories Burned</string>
+    <string name="distance_covered">Distance\nCovered</string>
+    <string name="calories_burned">Calories\nBurned</string>
     <string name="performance">Performance</string>
-
+    <string name="total_time_nl">Total\nTime</string>
+    <string name="avg_speed_nl">Average\nSpeed</string>
 </resources>

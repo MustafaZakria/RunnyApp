@@ -8,9 +8,10 @@ import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.example.runningapp.R
+import com.example.runningapp.db.Run
 import com.example.runningapp.other.Constants.KEY_STREAK_DAYS
 import com.example.runningapp.other.TrackingUtility.getFormattedStopWatchTime
 import com.example.runningapp.other.TrackingUtility.getRunBYDate
@@ -32,7 +33,7 @@ import javax.inject.Inject
 class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
 
 
-    private val viewModel: StatisticsViewModel by viewModels()
+    private val viewModel: StatisticsViewModel by activityViewModels()
 
     @Inject
     lateinit var sharedPreferences: SharedPreferences
@@ -42,11 +43,10 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
         super.onViewCreated(view, savedInstanceState)
         subscribeToObservers()
         setupBarChart()
-        setStreakRunningDays()
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
-    private fun setStreakRunningDays() {
+    private fun setStreakRunningDays(runs: List<Run>) {
         val dateFormat = SimpleDateFormat("dd.MM.yy", Locale.getDefault())
         val todayCal = Calendar.getInstance()
         val yesterdayCal = Calendar.getInstance()
@@ -55,15 +55,12 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
         val today = dateFormat.format(todayCal.time)
         val yesterday = dateFormat.format(yesterdayCal.time)
 
-        var days = sharedPreferences.getInt(KEY_STREAK_DAYS, 0)
-        viewModel.runsSortedByDate.value?.let {
-            if (getRunBYDate(it, yesterday).isEmpty() && getRunBYDate(it, today).isEmpty()) {
-                days = 0
-            }
-            val text = "$days /"
-            tvDay.text = text
+        if (getRunBYDate(runs, yesterday).isEmpty() && getRunBYDate(runs, today).isEmpty()) {
+            sharedPreferences.edit().putInt(KEY_STREAK_DAYS, 0).apply()
         }
-
+        val days = sharedPreferences.getInt(KEY_STREAK_DAYS, 0)
+        val text = "$days /"
+        tvDay.text = text
     }
 
     private fun setupBarChart() {
@@ -75,7 +72,6 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
             textColor = Color.WHITE
             setDrawGridLines(false)
             setDrawAxisLine(false)
-            valueFormatter = AxisFormatter()
         }
         barChart.axisLeft.apply {
             axisLineColor = Color.WHITE
@@ -88,16 +84,14 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
         }
         barChart.axisRight.isEnabled = false
         barChart.apply {
-//            description.text = "Avg Speed Over Time"
             legend.isEnabled = false
         }
     }
 
-    inner class AxisFormatter : IndexAxisValueFormatter() {
-        var labels = mutableListOf<String>()
+    inner class AxisFormatter(private val labels: List<String>) : IndexAxisValueFormatter() {
         override fun getAxisLabel(value: Float, axis: AxisBase?): String {
             val indexOfBar = value.toInt()
-            return if (indexOfBar - 1 < labels.size) {
+            return if (indexOfBar < labels.size) {
                 labels[indexOfBar]
             } else {
                 ""
@@ -105,11 +99,10 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     private fun subscribeToObservers() {
         viewModel.runsSortedByDate.observe(viewLifecycleOwner, Observer {
-            val days = sharedPreferences.getInt(KEY_STREAK_DAYS, 0)
-            val text = "$days /"
-            tvDay.text = text
+            setStreakRunningDays(it)
         })
         viewModel.totalTimeRun.observe(viewLifecycleOwner, Observer {
             it?.let {
@@ -120,36 +113,56 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
         viewModel.totalDistance.observe(viewLifecycleOwner, Observer {
             it?.let {
                 val totalDistance = kotlin.math.round((it / 1000f) * 10f) / 10f
-                val totalDistanceString = "${totalDistance}km"
-                tvTotalDistance.text = totalDistanceString
+                tvTotalDistance.text = totalDistance.toString()
             }
         })
         viewModel.totalAvgSpeed.observe(viewLifecycleOwner, Observer {
             it?.let {
                 val avgSpeed = kotlin.math.round(it * 10f) / 10f
-                val avgSpeedString = "${avgSpeed}km/h"
-                tvAverageSpeed.text = avgSpeedString
+                tvAverageSpeed.text = avgSpeed.toString()
             }
         })
         viewModel.totalCaloriesBurned.observe(viewLifecycleOwner, Observer {
             it?.let {
-                val totalCalories = "${it}kcal"
-                tvTotalCalories.text = totalCalories
+                tvTotalCalories.text = it.toString()
             }
         })
         viewModel.runsSortedByDate.observe(viewLifecycleOwner, Observer {
             it?.let {
-                val allAvgSpeeds =
-                    it.indices.map { i -> BarEntry(i.toFloat(), it[i].avgSpeedInKMH) }.subList(0, 6)
-                val allDistance =
-                    it.indices.map { i -> BarEntry(i.toFloat(), it[i].distanceInMeters / 1000f) }.subList(0, 6)
+                var allAvgSpeeds =
+                    it.take(6).indices.map { i -> BarEntry(i.toFloat(), it[i].avgSpeedInKMH) }
+                var allDistance =
+                    it.take(6).indices.map { i ->
+                        BarEntry(
+                            i.toFloat(),
+                            it[i].distanceInMeters / 1000f
+                        )
+                    }
+                if (allDistance.size < 6) {
+                    allAvgSpeeds = allAvgSpeeds.toMutableList()
+                    allDistance = allDistance.toMutableList()
+                    var i = allDistance.size
+                    while (i < 6) {
+                        allAvgSpeeds.add(BarEntry(i.toFloat(), 0f))
+                        allDistance.add(BarEntry(i.toFloat(), 0f))
+                        i++
+                    }
+                }
+                val labels = it.take(6).map { run ->
+                    val calendar = Calendar.getInstance().apply {
+                        timeInMillis = run.timestamp
+                    }
+                    val dateFormat = SimpleDateFormat("dd-MMM", Locale.getDefault())
+                    dateFormat.format(calendar.time)
+                }
+                barChart.xAxis.valueFormatter = AxisFormatter(labels)
                 val barDataSetSpeed = BarDataSet(allAvgSpeeds, "avg speed").apply {
                     valueTextColor = R.color.off_white
                     color = ContextCompat.getColor(requireContext(), R.color.green)
                 }
                 val barDataSetDistance = BarDataSet(allDistance, "distance").apply {
                     valueTextColor = R.color.off_white
-                    color =ContextCompat.getColor(requireContext(), R.color.dark_green)
+                    color = ContextCompat.getColor(requireContext(), R.color.dark_green)
                 }
                 val bars = arrayListOf(barDataSetSpeed, barDataSetDistance)
                 val bar1 = BarData(bars as List<IBarDataSet>?)

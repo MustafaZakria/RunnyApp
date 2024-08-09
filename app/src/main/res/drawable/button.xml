@@ -4,7 +4,6 @@
     <item>
         <shape>
             <corners android:bottomLeftRadius="32dp" android:bottomRightRadius="32dp" android:topLeftRadius="32dp" android:topRightRadius="32dp" />
-            <padding android:bottom="12dp" android:left="10dp" android:right="10dp" android:top="12dp" />
         </shape>
     </item>
 </selector>

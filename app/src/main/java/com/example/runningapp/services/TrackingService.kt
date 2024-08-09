@@ -6,7 +6,6 @@ import android.app.NotificationManager
 import android.app.NotificationManager.IMPORTANCE_LOW
 import android.app.PendingIntent
 import android.app.PendingIntent.FLAG_MUTABLE
-import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
 import android.location.Location
@@ -19,7 +18,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.example.runningapp.R
 import com.example.runningapp.other.Constants.ACTION_PAUSE_SERVICE
-import com.example.runningapp.other.Constants.ACTION_SHOW_TRACKING_FRAGMENT
 import com.example.runningapp.other.Constants.ACTION_START_OR_RESUME_SERVICE
 import com.example.runningapp.other.Constants.ACTION_STOP_SERVICE
 import com.example.runningapp.other.Constants.FASTEST_LOCATION_INTERVAL
@@ -29,7 +27,6 @@ import com.example.runningapp.other.Constants.NOTIFICATION_CHANNEL_NAME
 import com.example.runningapp.other.Constants.NOTIFICATION_ID
 import com.example.runningapp.other.Constants.TIMER_UPDATE_INTERVAL
 import com.example.runningapp.other.TrackingUtility
-import com.example.runningapp.ui.MainActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -67,6 +64,7 @@ class TrackingService: LifecycleService() {
         val timeRunInMillis =MutableLiveData<Long>()
         val isTracking = MutableLiveData<Boolean>()
         val pathPoints = MutableLiveData<PolyLines>()
+        val distanceInMeters = MutableLiveData<Long>()
     }
 
     private fun postInitialValues() {
@@ -74,6 +72,7 @@ class TrackingService: LifecycleService() {
         pathPoints.postValue(mutableListOf())
         timeRunInSeconds.postValue(0L)
         timeRunInMillis.postValue(0L)
+        distanceInMeters.postValue(0L)
     }
 
     override fun onCreate() {
@@ -85,6 +84,21 @@ class TrackingService: LifecycleService() {
             updateLocationTracking(it)
             updateNotificationTrackingState(it)
         })
+        pathPoints.observe(this, Observer {
+            updateCurrentDistance(it)
+        })
+    }
+
+    private fun updateCurrentDistance(polyLines: PolyLines) {
+        if (polyLines.isNotEmpty() && polyLines.last().size > 1) {
+            val polyLine = polyLines.last()
+            val newPolyLine: PolyLine =
+                mutableListOf(polyLine.last(), polyLine[polyLine.lastIndex - 1])
+            distanceInMeters.value?.apply {
+                val value = TrackingUtility.calculatePolylineLength(newPolyLine).toLong() + this
+                distanceInMeters.postValue(value)
+            }
+        }
     }
 
     private fun killService() {

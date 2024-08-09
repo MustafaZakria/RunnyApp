@@ -5,11 +5,14 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -38,6 +41,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_tracking.*
+import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -46,7 +50,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class TrackingFragment : Fragment(R.layout.fragment_tracking) {
 
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: MainViewModel by activityViewModels()
 
     @Inject
     lateinit var sharedPreferences: SharedPreferences
@@ -54,11 +58,10 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
     var map: GoogleMap? = null
 
     private var curTimeInMillis = 0L
+    private var curDistanceInMeters = 0L
 
     private var isTracking = false
     private var pathPoints = mutableListOf<PolyLine>()
-
-//    private var menu: Menu? = null
 
     @set:Inject
     var weight = 80f
@@ -68,10 +71,11 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        setHasOptionsMenu(true)
+
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mapView.onCreate(savedInstanceState)
@@ -111,7 +115,6 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
 
         TrackingService.pathPoints.observe(viewLifecycleOwner, Observer {
             pathPoints = it
-            updateScreenLatest()
             addLatestPolyline()
             moveCameraToUser()
         })
@@ -121,61 +124,32 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
             val formattedTime = getFormattedStopWatchTime(curTimeInMillis)
             tvTimer.text = formattedTime
         })
+        TrackingService.distanceInMeters.observe(viewLifecycleOwner, Observer {
+            curDistanceInMeters = it
+            updateScreenLatest()
+        })
     }
 
-    private var currentMeters = 0L
-    private var lastMillis = 0L
-
     private fun updateScreenLatest() { //here updating calories, avg speed, distance
-        if (pathPoints.isNotEmpty() && pathPoints.last().size > 1) {
-            val polyLine = pathPoints.last()
-            val newPolyLine: PolyLine =
-                mutableListOf(polyLine.last(), polyLine[polyLine.lastIndex - 1])
-            currentMeters += calculatePolylineLength(newPolyLine).toInt()
-            val distanceKm = currentMeters / 1000f
-            tvDistanceKM.text = distanceKm.toString()
+        val distanceKm = curDistanceInMeters / 1000f
+        tvDistanceKM.text = distanceKm.toString()
 
-            val weight = sharedPreferences.getFloat(KEY_WEIGHT, 80f)
-            tvCaloriesKcal.text = (distanceKm * weight).toInt().toString()
+        val weight = sharedPreferences.getFloat(KEY_WEIGHT, 80f)
+        tvCaloriesKcal.text = (distanceKm * weight).toInt().toString()
 
-            val timeDiff = (System.currentTimeMillis() - lastMillis)
-            val avgSpeed =
-                kotlin.math.round(distanceKm / (timeDiff / 1000f / 60 / 60) * 10) / 10f
-            tvSpeedKmh.text = avgSpeed.toString()
-        }
-        lastMillis = System.currentTimeMillis()
+        val avgSpeed =
+            kotlin.math.round((distanceKm) / (curTimeInMillis / 1000f / 60 / 60) * 10) / 10f
+        tvSpeedKmh.text = avgSpeed.toString()
     }
 
     private fun toggleRun() {
         if (isTracking) {
-//            menu?.getItem(0)?.isVisible = true
             sendCommandToService(ACTION_PAUSE_SERVICE)
         } else {
             sendCommandToService(ACTION_START_OR_RESUME_SERVICE)
         }
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-//        super.onCreateOptionsMenu(menu, inflater)
-//        inflater.inflate(R.menu.toolbar_tracking_menu, menu)
-//        this.menu = menu
-//    }
-//
-//    override fun onPrepareOptionsMenu(menu: Menu) {
-//        super.onPrepareOptionsMenu(menu)
-//        if(curTimeInMillis > 0L) {
-//            this.menu?.getItem(0)?.isVisible = true
-//        }
-//    }
-//
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        when(item.itemId) {
-//            R.id.miCancelTracking -> {
-//                showCancelTrackingDialog()
-//            }
-//        }
-//        return super.onOptionsItemSelected(item)
-//    }
 
     private fun showCancelTrackingDialog() {
         val dialog = MaterialAlertDialogBuilder(requireContext(), R.style.AlertDialogTheme)
@@ -206,11 +180,8 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
         this.isTracking = isTracking
         if (!isTracking && curTimeInMillis > 0L) {
             btnToggleRun.text = "Start"
-//            btnFinishRun.visibility = View.VISIBLE
         } else if (isTracking) {
             btnToggleRun.text = "Stop"
-//            menu?.getItem(0)?.isVisible = true
-//            btnFinishRun.visibility = View.GONE
         }
     }
 
@@ -238,13 +209,13 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
                 bounds.build(),
                 mapView.width,
                 mapView.height,
-                (mapView.height * 0.05f).toInt()
+                (mapView.height * 0.4f).toInt()
             )
         )
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     private fun endRunAndSaveToDb() {
-        updateStreakRunningDays()
         map?.snapshot { bmp ->
             var distanceINMeters = 0
             for (polyline in pathPoints) {
@@ -257,6 +228,7 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
             val run =
                 Run(bmp, dateTimestamp, avgSpeed, distanceINMeters, curTimeInMillis, caloriesBurned)
             viewModel.insertRun(run)
+            updateStreakRunningDays()
             Snackbar.make(
                 requireActivity().findViewById(R.id.rootView),
                 "Run saved successfully",
@@ -275,7 +247,6 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
 
         val today = dateFormat.format(todayCal.time)
         val yesterday = dateFormat.format(yesterdayCal.time)
-
         viewModel.runs.value?.let {
             if (getRunBYDate(it, today).isEmpty()) {
                 var value = 1
@@ -290,7 +261,7 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
     private fun addAllPolylines() { //to draw lines when user press the notification
         for (polyline in pathPoints) {
             val polylineOptions = PolylineOptions()
-                .color(POLYLINE_COLOR)
+                .color(ContextCompat.getColor(requireContext(), POLYLINE_COLOR))
                 .width(POLYLINE_WIDTH)
                 .addAll(polyline)
             map?.addPolyline(polylineOptions)
@@ -302,7 +273,7 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
             val preLastLatLng = pathPoints.last()[pathPoints.last().size - 2]
             val lastLatLng = pathPoints.last().last()
             val polylineOptions = PolylineOptions()
-                .color(POLYLINE_COLOR)
+                .color(ContextCompat.getColor(requireContext(), POLYLINE_COLOR))
                 .width(POLYLINE_WIDTH)
                 .add(preLastLatLng)
                 .add(lastLatLng)

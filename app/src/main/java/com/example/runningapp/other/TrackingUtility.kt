@@ -5,6 +5,7 @@ import android.content.Context
 import android.icu.util.Calendar
 import android.location.Location
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import com.example.runningapp.db.Run
 import com.example.runningapp.services.PolyLine
@@ -73,6 +74,7 @@ object TrackingUtility {
 
     @RequiresApi(Build.VERSION_CODES.N)
     fun getRunBYDate(runs: List<Run>, date: String): List<Run> {
+        Log.d("****", runs.size.toString())
         return runs.filter {
             val calendar = Calendar.getInstance().apply {
                 this.timeInMillis = it.timestamp

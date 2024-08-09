@@ -4,9 +4,12 @@ import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -32,7 +35,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class RunFragment : Fragment(R.layout.fragment_run), EasyPermissions.PermissionCallbacks {
 
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: MainViewModel by activityViewModels()
 
     private lateinit var runAdapter: RunAdapter
 
@@ -117,7 +120,7 @@ class RunFragment : Fragment(R.layout.fragment_run), EasyPermissions.PermissionC
         val text = "Hello, $userName"
         tvHello.text = text
         if (pictureUri?.isNotEmpty() == true) {
-            val uri = Uri.parse(pictureUri)
+            var uri = Uri.parse(pictureUri)
             ivProfile.setImageURI(uri)
         }
     }

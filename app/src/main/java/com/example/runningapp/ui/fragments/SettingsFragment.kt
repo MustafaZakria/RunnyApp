@@ -6,9 +6,11 @@ import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.runningapp.R
@@ -56,7 +58,10 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             if (result.resultCode == Activity.RESULT_OK && result.data != null) {
                 val uri = result.data?.data as Uri
                 ivProfile.setImageURI(uri)
-                sharedPref.edit().putString(KEY_PICTURE_URI, uri.toString()).apply()
+                val input = requireContext().contentResolver?.openInputStream(uri)
+                val outputFile = requireContext().filesDir?.resolve("profilePic.jpg")
+                outputFile?.outputStream()?.let { input?.copyTo(it) }
+                sharedPref.edit().putString(KEY_PICTURE_URI, outputFile?.toUri().toString()).apply()
             }
         }
 
