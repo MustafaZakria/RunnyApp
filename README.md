@@ -24,9 +24,9 @@ Running Tracker Application
 
 ## Screens
 <p float="left">
-  <img src="Screens/one.png" width="100" />
-  <img src="Screens/two.png" width="100" /> 
-  <img src="Screens/three.png" width="100" />
-  <img src="Screens/four.png" width="100" />
-  <img src="Screens/five.png" width="100" />
+  <img src="Screens/one.jpg" width="100" />
+  <img src="Screens/two.jpg" width="100" /> 
+  <img src="Screens/three.jpg" width="100" />
+  <img src="Screens/four.jpg" width="100" />
+  <img src="Screens/five.jpg" width="100" />
 </p> 
